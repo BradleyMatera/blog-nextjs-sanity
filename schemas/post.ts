@@ -2,8 +2,6 @@ import { BookIcon } from '@sanity/icons'
 import { format, parseISO } from 'date-fns'
 import { defineField, defineType } from 'sanity'
 
-import authorType from './author'
-
 /**
  * This file is the schema definition for a post.
  *
@@ -35,6 +33,7 @@ export default defineType({
       options: {
         source: 'title',
         maxLength: 96,
+        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 96),
         isUnique: (value, context) => context.defaultIsUnique(value, context),
       },
       validation: (rule) => rule.required(),
@@ -61,7 +60,7 @@ export default defineType({
               name: 'alt',
               type: 'string',
               title: 'Alternative text',
-              description: 'Important for SEO and accessiblity.',
+              description: 'Important for SEO and accessibility.',
             },
           ],
         },
@@ -71,6 +70,8 @@ export default defineType({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',
+      validation: (rule) =>
+        rule.max(160).warning('Keep the excerpt below 160 characters.'),
     }),
     defineField({
       name: 'coverImage',
@@ -90,7 +91,34 @@ export default defineType({
       name: 'author',
       title: 'Author',
       type: 'reference',
-      to: [{ type: authorType.name }],
+      to: [{ type: 'author' }], // Ensures reference matches the existing 'author' schema
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
+    }),
+    defineField({
+      name: 'category',
+      title: 'Category',
+      type: 'string', // Simplified to a string if the reference isn't needed
+      options: {
+        list: [
+          { title: 'Tech', value: 'tech' },
+          { title: 'Lifestyle', value: 'lifestyle' },
+          { title: 'News', value: 'news' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'readingTime',
+      title: 'Reading Time (in minutes)',
+      type: 'number',
+      validation: (rule) => rule.min(1).max(60),
     }),
   ],
   preview: {
@@ -99,14 +127,16 @@ export default defineType({
       author: 'author.name',
       date: 'date',
       media: 'coverImage',
+      tags: 'tags',
     },
-    prepare({ title, media, author, date }) {
+    prepare({ title, media, author, date, tags }) {
       const subtitles = [
         author && `by ${author}`,
         date && `on ${format(parseISO(date), 'LLL d, yyyy')}`,
-      ].filter(Boolean)
+        tags && `Tags: ${tags.join(', ')}`,
+      ].filter(Boolean);
 
-      return { title, media, subtitle: subtitles.join(' ') }
+      return { title, media, subtitle: subtitles.join(' | ') };
     },
   },
-})
+});
