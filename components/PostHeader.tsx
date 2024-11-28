@@ -9,22 +9,38 @@ export default function PostHeader(
 ) {
   const { title, coverImage, date, author, slug } = props
   return (
-    <>
+    <div className="bg-accent-1 p-6 rounded-lg shadow-md">
       <PostTitle>{title}</PostTitle>
       <div className="hidden md:mb-12 md:block">
-        {author && <Avatar name={author.name} picture={author.picture} />}
+        {author && (
+          <div className="flex items-center space-x-4">
+            <Avatar name={author.name} picture={author.picture} />
+            <span className="text-gray-700 text-sm font-medium">{author.name}</span>
+          </div>
+        )}
       </div>
       <div className="mb-8 sm:mx-0 md:mb-16">
-        <CoverImage title={title} image={coverImage} priority slug={slug} />
+        <CoverImage
+          title={title}
+          image={coverImage}
+          priority
+          slug={slug}
+          className="rounded-lg shadow-lg"
+        />
       </div>
       <div className="mx-auto max-w-2xl">
         <div className="mb-6 block md:hidden">
-          {author && <Avatar name={author.name} picture={author.picture} />}
+          {author && (
+            <div className="flex items-center space-x-4">
+              <Avatar name={author.name} picture={author.picture} />
+              <span className="text-gray-700 text-sm font-medium">{author.name}</span>
+            </div>
+          )}
         </div>
-        <div className="mb-6 text-lg">
+        <div className="mb-6 text-lg text-gray-700">
           <Date dateString={date} />
         </div>
       </div>
-    </>
+    </div>
   )
 }

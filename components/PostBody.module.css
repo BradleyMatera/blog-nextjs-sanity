@@ -1,25 +1,49 @@
 .portableText {
-  @apply text-lg leading-relaxed;
+  @apply text-lg leading-relaxed text-gray-900;
+  background-color: #F2FAFA;
+  /* A light complement to #6DB1BF */
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  line-height: 1.8;
 }
 
 .portableText p,
 .portableText ul,
 .portableText ol,
 .portableText blockquote {
-  @apply my-6;
+  @apply my-6 text-gray-800;
+  /* Softer text color for readability */
 }
 
 .portableText h2 {
-  @apply mb-4 mt-12 text-3xl leading-snug;
+  @apply mb-4 mt-12 text-3xl leading-snug font-semibold text-gray-900;
 }
 
 .portableText h3 {
-  @apply mb-4 mt-8 text-2xl leading-snug;
+  @apply mb-4 mt-8 text-2xl leading-snug font-medium text-gray-900;
 }
 
 .portableText a {
-  @apply text-blue-500 underline;
+  @apply text-blue-600 underline;
+  /* Ensure this color is in your Tailwind config */
 }
+
 .portableText a:hover {
   @apply text-blue-800;
+  /* Replace `text-cyan-800` with a working color */
+}
+
+.portableText blockquote {
+  @apply pl-4 border-l-4 border-blue-500 italic text-gray-700;
+  /* Updated border to a valid Tailwind color */
+}
+
+.portableText ul,
+.portableText ol {
+  @apply list-disc list-inside;
+}
+
+.portableText li {
+  @apply ml-6;
 }

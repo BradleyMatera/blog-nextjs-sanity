@@ -224,7 +224,7 @@ export function OpenGraphImage(props: { title: string }) {
           whiteSpace: 'pre-wrap',
         }}
       >
-        <b style={{ background: '#fff' }}>{title}</b>
+        <b style={{ background: '#FFEAEC' }}>{title}</b>
       </div>
       <div
         style={{

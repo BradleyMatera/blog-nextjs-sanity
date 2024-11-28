@@ -5,6 +5,9 @@ module.exports = {
     './intro-template/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
     './plugins/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}',
+    './lib/**/*.{js,ts,jsx,tsx}', // Include additional files if necessary
+
   ],
   theme: {
     extend: {
@@ -16,6 +19,10 @@ module.exports = {
         cyan: '#79FFE1',
         'blue-500': '#2276FC',
         'yellow-100': '#fef7da',
+        'customBackground': '#6DB1BF',
+         '600': '#0891b2', // Add custom definition for `text-cyan-600` if missing
+
+
       },
       spacing: {
         28: '7rem',
